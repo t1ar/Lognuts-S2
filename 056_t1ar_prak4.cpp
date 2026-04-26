@@ -18,6 +18,10 @@ int main(){
     loadData();
     mainMenu();
     saveData();
+    cout << R"(-----------------------------------------------
+		   Thank You for visiting!
+-----------------------------------------------)" << endl;
+    return 0;
 }
 
 

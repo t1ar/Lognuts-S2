@@ -1,12 +1,17 @@
 #include "../../include/data/service.h"
+#include "../../include/data/globals.h"
+#include "../../include/io/fileHandler.h"
+#include "../../include/menu/menu.h"
 #include <iostream>
 using namespace std;
 
-// Forward declarations
-void bookingMenu();
-void bookingServis();
-void queueMenu();
-void finishService();
+
+void chooseMechanicUI(){
+    cout << "\nPilih Montir:\n";
+    for (int i = 0; i < mechanicCount; i++) {
+        cout << (i + 1) << ". " << mechanics[i] << "\n";
+    }
+}
 
 void titleASCII(){
     cout << R"(===============================================
@@ -25,6 +30,7 @@ void mainMenu(){
         1. Booking Service
         2. Lihat Antrian
         3. Selesaikan Service
+        4. Ganti Tanggal Ambil
         0. Keluar
 +++++++++++++++++++++++++++++++++++++++++++++++
     Pilihan : )"; cin >> pilihan; cout << "\n";
@@ -32,6 +38,7 @@ void mainMenu(){
         case 1: bookingMenu(); break;
         case 2: queueMenu(); break;
         case 3: finishService(); break;
+        case 4: changeDate(); break;
         case 0: return;
         default : cout << "Pilihan tidak valid! \n";
         }
@@ -57,7 +64,18 @@ void queueMenu(){
 }
 
 void finishService() {
-    // TODO: Implement finish service logic
-    cout << "Finish Service - Coming Soon!\n";
+    
+    cout << R"(-----------------------------------------------
+		      Selesaikan Servis
+-----------------------------------------------)" << endl;
+    chooseMechanic();
+    int choice;
+    
+
 }
 
+void changeDate(){
+    cout << R"(-----------------------------------------------
+		     Ganti Tanggal Ambil
+-----------------------------------------------)" << endl;
+}

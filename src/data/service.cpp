@@ -1,5 +1,7 @@
 #include "../../include/data/service.h"
+#include "../../include/data/globals.h"
 #include "../../include/io/fileHandler.h"
+#include "../../include/menu/menu.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -13,12 +15,7 @@ int getValidPriority() {
         cout << "Kepentingan (1-4): ";
         cin >> priority;
         
-        if (cin.fail()) {  // Input is not a number
-            cin.clear();
-            cin.ignore(10000, '\n');
-            cout << "Error: Masukkan angka yang valid!\n";
-            continue;
-        }
+        if (!isValidInt(priority)) continue;
         
         if (priority >= 1 && priority <= 4) {
             cin.ignore(10000, '\n');  // Clear remaining input
@@ -29,25 +26,17 @@ int getValidPriority() {
     }
 }
 
-string getMechanic() {
+string selectMechanic() {
     loadMechanics();  // Load mechanics from JSON
     
-    cout << "\nPilih Montir:\n";
-    for (int i = 0; i < mechanicCount; i++) {
-        cout << (i + 1) << ". " << mechanics[i] << "\n";
-    }
+    chooseMechanicUI();
     
     int choice;
     while (true) {
         cout << "Masukkan nomor (1-" << mechanicCount << "): ";
         cin >> choice;
         
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(10000, '\n');
-            cout << "Error: Masukkan angka yang valid!\n";
-            continue;
-        }
+        if (!isValidInt(choice)) continue;
         
         if (choice >= 1 && choice <= mechanicCount) {
             cin.ignore(10000, '\n');
@@ -64,7 +53,7 @@ void bookingServis() {
     cout << "Model Mobil: "; cin >> ws; getline(cin, newService->carModel);
     cout << "Merek Mobil: "; getline(cin, newService->carBrand);
     cout << "Kendala: "; getline(cin, newService->issueDesc);
-    newService->mechanic = getMechanic();
+    newService->mechanic = selectMechanic();
     cout << "Nama Pelanggan: "; getline(cin, newService->customer);
     newService->priority = getValidPriority();
     cout << "Tanggal Ambil (DD-MM-YY): >"; cin >> newService->outDate;

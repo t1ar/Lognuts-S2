@@ -14,6 +14,7 @@ struct Service {
 };
 
 void bookingServis();
+void getMechanic();
 
 extern Service* headQueue;
 extern Service* headDone;
