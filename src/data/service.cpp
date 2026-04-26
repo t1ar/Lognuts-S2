@@ -62,49 +62,48 @@ void SwapServiceData(Service* a, Service* b) {
 
 // uses bubble sort
 void QueueSort(Service* head, char mode) {
-    // Jika antrian kosong atau hanya ada 1 elemen, tidak perlu disortir
+    // dont sort if only one/empty
     if (!head || !head->next) return;
     
     bool swapped;
     Service* ptr1;
-    Service* lptr = nullptr; // Batas akhir pengecekan
+    Service* lptr = nullptr; // the last end
 
     do {
         swapped = false;
         ptr1 = head;
 
-        // Loop berjalan sampai menyentuh elemen yang sudah terurut di akhir (lptr)
+        // keep looping until the end of pointer
         while (ptr1->next != lptr) {
             bool condition = false;
             
             if (mode == 'D') { 
-                // Sort By Date (Ascending / Tanggal terawal di atas)
+                // Sort By Date 
                 if (ParseDate(ptr1->outDate) > ParseDate(ptr1->next->outDate)) {
                     condition = true;
                 }
             } else if (mode == 'U') { 
-                // Sort By Urgency (Descending / Kepentingan tertinggi di atas)
+                // Sort By Pritority
                 if (ptr1->priority < ptr1->next->priority) {
                     condition = true;
                 } else if (ptr1->priority == ptr1->next->priority) {
-                    // Jika urgensi sama, prioritaskan tanggal terawal 
+                    // if same, sort by date
                     if (ParseDate(ptr1->outDate) > ParseDate(ptr1->next->outDate)) {
                         condition = true;
                     }
                 }
             }
             
-            // Lakukan swap data jika posisinya salah
+            // swap if really not sorted
             if (condition) {
                 SwapServiceData(ptr1, ptr1->next);
                 swapped = true;
             }
             
-            ptr1 = ptr1->next; // Pindah ke node selanjutnya
+            ptr1 = ptr1->next; // move to next
         }
         
-        // Optimasi: Setelah satu putaran, elemen paling ujung pasti sudah nilai terbesar/terkecil.
-        // Jadi, iterasi berikutnya tidak perlu mengecek sampai ujung lagi.
+        //dont check again, because we already sort
         lptr = ptr1; 
         
     } while (swapped);
@@ -121,11 +120,11 @@ void BookingServis() {
     new_service->priority = GetValidPriority();
     cout << "Tanggal Ambil (DD-MM-YY): >"; cin >> new_service->outDate;
     
-    // Verifikasi tanggal dengan recursion
-    //new_service->outDate = rekursifTanggal(new_service->outDate);
+    // verify whether the date is really available
+    new_service->outDate = RecursionDate(new_service->outDate);
     new_service->next = nullptr;
     
-    // Insert di akhir (Queue) dengan cara iterasi manual ke ujung [cite: 18]
+    // insert new service at the end
     if (!headQueue) {
         headQueue = new_service;
     } else {

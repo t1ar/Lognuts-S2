@@ -41,6 +41,7 @@ void MainMenu(){
 }
 
 void BookingMenu() {
+    CleanScreen();
     cout << R"(-----------------------------------------------
                 Booking Servis
 -----------------------------------------------)" << endl;
@@ -98,7 +99,7 @@ void QueueMenu(){
 }
 
 void FinishService() {
-    
+    CleanScreen();
     cout << R"(-----------------------------------------------
 		      Selesaikan Servis
 -----------------------------------------------)" << endl;
@@ -150,7 +151,6 @@ void FinishService() {
     Service* prevTarget = nullptr;
     int current_idx = 0;
 
-    // Mencari servis sesuai pilihan
     while (curr) {
         if (curr->mechanic == chosenMech) {
             current_idx++;
@@ -164,7 +164,6 @@ void FinishService() {
         curr = curr->next;
     }
     
-    // Konfirmasi penyelesaian
     char confirm;
     cout << "Konfirmasi penyelesaian servis " << target->carBrand << " " << target->carModel 
          << " milik " << target->customer << "? (Y/N): > ";
@@ -193,6 +192,7 @@ void FinishService() {
 }
 
 void ChangeDate(){
+    CleanScreen();
     cout << R"(-----------------------------------------------
 		     Ganti Tanggal Ambil
 -----------------------------------------------)" << endl;

@@ -13,7 +13,6 @@ void SaveDatabase() {
     db["onQueue"] = json::array();
     db["done"] = json::array();
 
-    // Simpan antrian aktif
     Service* current = headQueue;
     while (current) {
         json j;
@@ -28,7 +27,6 @@ void SaveDatabase() {
         current = current->next;
     }
 
-    // Simpan history servis selesai
     current = headDone;
     while (current) {
         json j;
@@ -66,7 +64,6 @@ void LoadDatabase() {
     }
     file.close();
 
-    // Muat antrian aktif
     if (db.contains("onQueue")) {
         for (const auto& item : db["onQueue"]) {
             Service* service = new Service();
@@ -101,7 +98,6 @@ void LoadDatabase() {
         }
     }
 
-    // Muat history servis selesai
     if (db.contains("done")) {
         for (const auto& item : db["done"]) {
             Service* service = new Service();
