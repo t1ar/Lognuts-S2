@@ -10,9 +10,10 @@ struct Service {
     string mechanic;
     string outDate;
     int priority;
-    bool isCompleted;
-    bool isCancelled;
+    Service* next; 
 };
+
+void bookingServis();
 
 extern Service* headQueue;
 extern Service* headDone;
