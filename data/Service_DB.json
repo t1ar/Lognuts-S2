@@ -1,33 +1,51 @@
 {
-    "onQueue": [
-        {
-            "carModel" : "M3 GTR",
-            "carBrand" : "BMW",
-            "customer" : "Razor Callahan",
-            "outDate" : "14-11-26",
-            "priority" : "4",
-            "mechanic" : "Suby",
-            "issueDesc" : "Oli Bocor" 
-        },
-        {
-            "carModel" : "350z",
-            "carBrand" : "Nissan",
-            "customer" : "Rachel Teller",
-            "outDate" : "09-11-26",
-            "priority" : "2",
-            "mechanic" : "Farhan",
-            "issueDesc" : "power Steering loss" 
-        }
-    ],
     "done": [
         {
-            "carModel" : "Golf GTI",
-            "carBrand" : "Volkswagen",
-            "customer" : "Sonny Seun",
-            "outDate" : "04-04-26",
-            "priority" : "1",
-            "mechanic" : "Aldo",
-            "issueDesc" : "turun mesin" 
+            "carBrand": "Volkswagen",
+            "carModel": "Golf GTI",
+            "customer": "Sonny Seun",
+            "issueDesc": "turun mesin",
+            "mechanic": "Aldo",
+            "outDate": "04-04-26",
+            "priority": 1
+        }
+    ],
+    "onQueue": [
+        {
+            "carBrand": "Nissan",
+            "carModel": "350z",
+            "customer": "Rachel Teller",
+            "issueDesc": "power Steering loss",
+            "mechanic": "Farhan",
+            "outDate": "09-11-26",
+            "priority": 2
+        },
+        {
+            "carBrand": "Toyota",
+            "carModel": "Supra",
+            "customer": "Vic Vance",
+            "issueDesc": "ban bocor",
+            "mechanic": "Farhan",
+            "outDate": "05-07-26",
+            "priority": 3
+        },
+        {
+            "carBrand": "BMW",
+            "carModel": "M3 GTR",
+            "customer": "Razor Callahan",
+            "issueDesc": "Oli Bocor",
+            "mechanic": "Suby",
+            "outDate": "14-11-26",
+            "priority": 4
+        },
+        {
+            "carBrand": "Nissan",
+            "carModel": "370z",
+            "customer": "Mas Hiro Pah Lawan",
+            "issueDesc": "windshield pecah",
+            "mechanic": "Dimas",
+            "outDate": "04-30-26",
+            "priority": 2
         }
     ]
 }

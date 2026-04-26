@@ -9,6 +9,7 @@
                 "-g",
                 "-I${workspaceFolder}/include",
                 "${workspaceFolder}/056_t1ar_prak4.cpp",
+                "${workspaceFolder}/src/data/globals.cpp",
                 "${workspaceFolder}/src/data/service.cpp",
                 "${workspaceFolder}/src/io/fileHandler.cpp",
                 "${workspaceFolder}/src/menu/menu.cpp",

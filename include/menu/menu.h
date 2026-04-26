@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-void chooseMechanicUI();
-void titleASCII();
-void mainMenu();
-void bookingMenu();
-void bookingServis();
-void queueMenu();
-void finishService();
-void changeDate();
+void ChooseMechanicUI();
+void TitleASCII();
+void MainMenu();
+void BookingMenu();
+void BookingServis();
+void QueueMenu();
+void FinishService();
+void ChangeDate();

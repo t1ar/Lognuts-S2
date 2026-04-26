@@ -6,41 +6,41 @@ using namespace std;
 using json = nlohmann::json;
 
 string mechanics[10];// no way a small shop has more than 10 employee
-int mechanicCount = 0;
+int mechanic_count = 0;
 
-void saveDatabase() {
+void SaveDatabase() {
     json db;
     db["onQueue"] = json::array();
     db["done"] = json::array();
 
     // Simpan antrian aktif
-    Service* curr = headQueue;
-    while (curr) {
+    Service* current = headQueue;
+    while (current) {
         json j;
-        j["carModel"] = curr->carModel;
-        j["carBrand"] = curr->carBrand;
-        j["customer"] = curr->customer;
-        j["outDate"] = curr->outDate;
-        j["priority"] = curr->priority;
-        j["mechanic"] = curr->mechanic;
-        j["issueDesc"] = curr->issueDesc;
+        j["carModel"] = current->carModel;
+        j["carBrand"] = current->carBrand;
+        j["customer"] = current->customer;
+        j["outDate"] = current->outDate;
+        j["priority"] = current->priority;
+        j["mechanic"] = current->mechanic;
+        j["issueDesc"] = current->issueDesc;
         db["onQueue"].push_back(j);
-        curr = curr->next;
+        current = current->next;
     }
 
     // Simpan history servis selesai
-    curr = headDone;
-    while (curr) {
+    current = headDone;
+    while (current) {
         json j;
-        j["carModel"] = curr->carModel;
-        j["carBrand"] = curr->carBrand;
-        j["customer"] = curr->customer;
-        j["outDate"] = curr->outDate;
-        j["priority"] = curr->priority;
-        j["mechanic"] = curr->mechanic;
-        j["issueDesc"] = curr->issueDesc;
+        j["carModel"] = current->carModel;
+        j["carBrand"] = current->carBrand;
+        j["customer"] = current->customer;
+        j["outDate"] = current->outDate;
+        j["priority"] = current->priority;
+        j["mechanic"] = current->mechanic;
+        j["issueDesc"] = current->issueDesc;
         db["done"].push_back(j);
-        curr = curr->next;
+        current = current->next;
     }
 
     ofstream file(SERVICE_DB);
@@ -50,7 +50,7 @@ void saveDatabase() {
     }
 }
 
-void loadDatabase() {
+void LoadDatabase() {
     ifstream file(SERVICE_DB);
     if (!file.is_open()) {
         cout << "Service_DB not found! Creating a new one." << endl;
@@ -69,21 +69,34 @@ void loadDatabase() {
     // Muat antrian aktif
     if (db.contains("onQueue")) {
         for (const auto& item : db["onQueue"]) {
-            Service* s = new Service();
-            s->carModel = item.value("carModel", "");
-            s->carBrand = item.value("carBrand", "");
-            s->customer = item.value("customer", "");
-            s->outDate = item.value("outDate", "");
-            s->priority = item.value("priority", 1);
-            s->mechanic = item.value("mechanic", "");
-            s->issueDesc= item.value("issueDesc", "");
-            s->next = nullptr;
+            Service* service = new Service();
+            service->carModel = item.value("carModel", "");
+            service->carBrand = item.value("carBrand", "");
+            service->customer = item.value("customer", "");
+            service->outDate = item.value("outDate", "");
+            
+            if (item.contains("priority")) {
+                if (item["priority"].is_number()) {
+                    service->priority = item["priority"].get<int>();
+                } else if (item["priority"].is_string()) {
+                    try { service->priority = stoi(item["priority"].get<string>()); }
+                    catch (...) { service->priority = 1; }
+                } else {
+                    service->priority = 1;
+                }
+            } else {
+                service->priority = 1;
+            }
+            
+            service->mechanic = item.value("mechanic", "");
+            service->issueDesc= item.value("issueDesc", "");
+            service->next = nullptr;
 
-            if (!headQueue) headQueue = s;
+            if (!headQueue) headQueue = service;
             else {
                 Service* temp = headQueue;
                 while (temp->next) temp = temp->next;
-                temp->next = s;
+                temp->next = service;
             }
         }
     }
@@ -91,57 +104,80 @@ void loadDatabase() {
     // Muat history servis selesai
     if (db.contains("done")) {
         for (const auto& item : db["done"]) {
-            Service* s = new Service();
-            s->carModel = item.value("carModel", "");
-            s->carBrand = item.value("carBrand", "");
-            s->customer = item.value("customer", "");
-            s->outDate = item.value("outDate", "");
-            s->priority = item.value("priority", 1);
-            s->mechanic = item.value("mechanic", "");
-            s->issueDesc= item.value("issueDesc", "");
-            s->next = nullptr;
+            Service* service = new Service();
+            service->carModel = item.value("carModel", "");
+            service->carBrand = item.value("carBrand", "");
+            service->customer = item.value("customer", "");
+            service->outDate = item.value("outDate", "");
+            
+            if (item.contains("priority")) {
+                if (item["priority"].is_number()) {
+                    service->priority = item["priority"].get<int>();
+                } else if (item["priority"].is_string()) {
+                    try { service->priority = stoi(item["priority"].get<string>()); }
+                    catch (...) { service->priority = 1; }
+                } else {
+                    service->priority = 1;
+                }
+            } else {
+                service->priority = 1;
+            }
+            
+            service->mechanic = item.value("mechanic", "");
+            service->issueDesc= item.value("issueDesc", "");
+            service->next = nullptr;
 
-            if (!headDone) headDone = s;
+            if (!headDone) headDone = service;
             else {
                 Service* temp = headDone;
                 while (temp->next) temp = temp->next;
-                temp->next = s;
+                temp->next = service;
             }
         }
     }
 }
 
-void loadMechanics(){
+void LoadMechanics(){
     ifstream file(MECHANIC_DB);
     if (!file.is_open()) {
         cout << "Montir_DB not found! Using default mechanics.\n";
         // use defaults if missing
         mechanics[0] = "Suby"; //the owner , duhh
         mechanics[1] = "Farhan"; //most loyal one
-        mechanicCount = 2;
+        mechanic_count = 2;
         return;
     }
     json data = json::parse(file);
-        mechanicCount = 0;
+        mechanic_count = 0;
         
         // Loop through mechanics array
         for (auto& mechanic : data["mechanics"]) {
-            mechanics[mechanicCount] = mechanic.get<string>();
-            mechanicCount++;
+            mechanics[mechanic_count] = mechanic.get<string>();
+            mechanic_count++;
         }
         
     file.close();
 }
 
-void saveMechanics() {
+void SaveMechanics() {
     json data;
     
     // Build JSON array
-    for (int i = 0; i < mechanicCount; i++) {
+    for (int i = 0; i < mechanic_count; i++) {
         data["mechanics"].push_back(mechanics[i]);
     }
     
     ofstream file(MECHANIC_DB);
     file << data.dump(2);  // Pretty print with 2-space indent
     file.close();
+}
+
+void LoadData() {
+    LoadDatabase();
+    LoadMechanics();
+}
+
+void SaveData() {
+    SaveDatabase();
+    SaveMechanics();
 }

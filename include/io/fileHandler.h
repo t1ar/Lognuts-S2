@@ -9,10 +9,10 @@ const std::string DB_DIR = "data/";
 const std::string SERVICE_DB = DB_DIR + "Service_DB.json";
 const std::string MECHANIC_DB = DB_DIR + "Montir_DB.json";
 
-void loadData();
-void saveData();
-void loadMechanics();
-void saveMechanics();
+void LoadData();
+void SaveData();
+void LoadMechanics();
+void SaveMechanics();
 
-extern string mechanics[];
-extern int mechanicCount;
+extern std::string mechanics[];
+extern int mechanic_count;

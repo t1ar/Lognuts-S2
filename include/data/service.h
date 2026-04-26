@@ -14,9 +14,11 @@ struct Service {
     Service* next; 
 };
 
-void bookingServis();
-void getMechanic();
-void swapServiceData(Service* a, Service* b);
+void BookingServis();
+std::string SelectMechanic();
+void SwapServiceData(Service* a, Service* b);
+void QueueSort(Service* head, char mode);
+void PrintServiceData(Service* service);
 
 extern Service* headQueue;
 extern Service* headDone;
