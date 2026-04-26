@@ -2,8 +2,7 @@
 #include "../../include/data/globals.h"
 #include "../../include/io/fileHandler.h"
 #include "../../include/menu/menu.h"
-#include <iostream>
-#include <string>
+
 using namespace std;
 
 Service* headQueue = nullptr;
@@ -27,7 +26,7 @@ int getValidPriority() {
 }
 
 string selectMechanic() {
-    loadMechanics();  // Load mechanics from JSON
+    loadMechanics();
     
     chooseMechanicUI();
     
@@ -45,6 +44,20 @@ string selectMechanic() {
             cout << "Error: Pilihan tidak valid!\n";
         }
     }
+}
+
+void swapServiceData(Service* a, Service* b) {
+    // save the next pointer first
+    Service* tempNextA = a->next;
+    Service* tempNextB = b->next;
+
+    Service temp = *a;
+    *a = *b;
+    *b = temp;
+
+    // restore the pointer to avoid corruption
+    a->next = tempNextA;
+    b->next = tempNextB;
 }
 
 void bookingServis() {

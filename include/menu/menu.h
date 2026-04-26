@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 void chooseMechanicUI();
 void titleASCII();
 void mainMenu();

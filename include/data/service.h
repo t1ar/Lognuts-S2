@@ -1,20 +1,22 @@
 #pragma once
+
+#include <iostream>
 #include <string>
-using namespace std;
 
 struct Service {
-    string carBrand;
-    string carModel;
-    string issueDesc;
-    string customer;
-    string mechanic;
-    string outDate;
+    std::string carBrand;
+    std::string carModel;
+    std::string issueDesc;
+    std::string customer;
+    std::string mechanic;
+    std::string outDate;
     int priority;
     Service* next; 
 };
 
 void bookingServis();
 void getMechanic();
+void swapServiceData(Service* a, Service* b);
 
 extern Service* headQueue;
 extern Service* headDone;

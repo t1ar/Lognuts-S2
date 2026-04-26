@@ -1,8 +1,6 @@
 #include "../../include/io/fileHandler.h"
 #include "../../include/data/service.h"
-#include <fstream>
-#include <iostream>
-#include <nlohmann/json.hpp>
+
 using namespace std;
 
 using json = nlohmann::json;
@@ -45,7 +43,7 @@ void saveDatabase() {
         curr = curr->next;
     }
 
-    ofstream file("database.json");
+    ofstream file(SERVICE_DB);
     if (file.is_open()) {
         file << db.dump(4);
         file.close();
@@ -53,7 +51,7 @@ void saveDatabase() {
 }
 
 void loadDatabase() {
-    ifstream file("database.json");
+    ifstream file(SERVICE_DB);
     if (!file.is_open()) {
         cout << "Service_DB not found! Creating a new one." << endl;
         return;
@@ -69,8 +67,8 @@ void loadDatabase() {
     file.close();
 
     // Muat antrian aktif
-    if (db.contains("antrian_aktif")) {
-        for (const auto& item : db["antrian_aktif"]) {
+    if (db.contains("onQueue")) {
+        for (const auto& item : db["onQueue"]) {
             Service* s = new Service();
             s->carModel = item.value("carModel", "");
             s->carBrand = item.value("carBrand", "");
@@ -91,8 +89,8 @@ void loadDatabase() {
     }
 
     // Muat history servis selesai
-    if (db.contains("servis_selesai")) {
-        for (const auto& item : db["servis_selesai"]) {
+    if (db.contains("done")) {
+        for (const auto& item : db["done"]) {
             Service* s = new Service();
             s->carModel = item.value("carModel", "");
             s->carBrand = item.value("carBrand", "");

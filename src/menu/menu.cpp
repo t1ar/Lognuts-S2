@@ -2,16 +2,8 @@
 #include "../../include/data/globals.h"
 #include "../../include/io/fileHandler.h"
 #include "../../include/menu/menu.h"
-#include <iostream>
+
 using namespace std;
-
-
-void chooseMechanicUI(){
-    cout << "\nPilih Montir:\n";
-    for (int i = 0; i < mechanicCount; i++) {
-        cout << (i + 1) << ". " << mechanics[i] << "\n";
-    }
-}
 
 void titleASCII(){
     cout << R"(===============================================
@@ -78,4 +70,11 @@ void changeDate(){
     cout << R"(-----------------------------------------------
 		     Ganti Tanggal Ambil
 -----------------------------------------------)" << endl;
+}
+
+void chooseMechanicUI(){
+    cout << "\nPilih Montir:\n";
+    for (int i = 0; i < mechanicCount; i++) {
+        cout << (i + 1) << ". " << mechanics[i] << "\n";
+    }
 }
